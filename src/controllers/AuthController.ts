@@ -1,10 +1,5 @@
 import { Request, Response } from "express";
 import { AuthServiceImpl } from "../services/impl/AuthServiceImpl";
-import { UserRepository } from "../models/repositories/UserRepositorio";
-import { getCustomRepository } from "typeorm";
-
-const repository = getCustomRepository(UserRepository);
-const authService: AuthServiceImpl = new AuthServiceImpl(repository);
 
 export class AuthController {
   private authService: AuthServiceImpl;
@@ -13,7 +8,7 @@ export class AuthController {
     this.authService = authService;
   }
 
-  async login(req: Request, res: Response): Promise<void> {
+  login = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
     try {
       const token = await this.authService.login(email, password);
@@ -25,9 +20,9 @@ export class AuthController {
         res.status(400).json({ message: "Aconteceu um erro" });
       }
     }
-  }
+  };
 
-  async signUp(req: Request, res: Response): Promise<void> {
+  signUp = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
     try {
       await this.authService.signUp(email, password);
@@ -39,5 +34,5 @@ export class AuthController {
         res.status(400).json({ message: "Aconteceu um erro" });
       }
     }
-  }
+  };
 }

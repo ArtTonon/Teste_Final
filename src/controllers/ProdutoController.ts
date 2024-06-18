@@ -29,4 +29,9 @@ export class ProdutoController {
     }
     return res.status(200).json({ produto });
   };
+
+  leProdutos = async (req: Request, res: Response) => {
+    const produtos = await this.produtoService.leProdutos();
+    return res.status(200).json({ produtos });
+  }
 }

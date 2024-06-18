@@ -15,7 +15,7 @@ export class AuthRouter {
 
   private iniciar(dataSource: DataSource) {
     console.log("iniciando rota");
-    const repository = dataSource.getRepository(User); 
+    const repository = dataSource.getRepository(User);
     const service = new AuthServiceImpl(repository as UserRepository);
     const controller = new AuthController(service);
 

@@ -5,7 +5,7 @@ import { User } from "./models/User";
 import e, { json } from "express";
 import { AuthRouter } from "./routes/AuthRouter";
 import { ProdutoRouter } from "./routes/ProdutoRouter";
-import cors from "cors"
+import cors from "cors";
 import passport from "passport";
 import { configurarPassport } from "./passport";
 import { autenticado } from "./passport";
@@ -16,7 +16,7 @@ export const AppDataSource = new DataSource({
   port: 3306,
   username: "root",
   password: "1234",
-  database: "usuario",
+  database: "testinho",
   entities: [Produto, User],
   synchronize: true,
   logging: false,
@@ -31,12 +31,14 @@ AppDataSource.initialize()
     const produtoRouter = new ProdutoRouter(AppDataSource);
 
     server.use(json());
-    server.use(cors({
-      origin:"*", 
-      credentials: true,
-    }))
-    server.use(passport.initialize())
-    configurarPassport(AppDataSource)
+    server.use(
+      cors({
+        origin: "*",
+        credentials: true,
+      })
+    );
+    server.use(passport.initialize());
+    configurarPassport(AppDataSource);
 
     server.use("/auth", authRouter.router);
     server.use("/produtos", autenticado, produtoRouter.router);
